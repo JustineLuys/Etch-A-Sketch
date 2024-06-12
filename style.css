@@ -1,0 +1,146 @@
+* {
+ margin: 0;
+padding: 0;
+}
+*,
+*::before,
+*::after {
+   box-sizing:border-box;
+}
+:root {
+	--primary-dark: #2c2a2a;
+    --primary-lightdark: #8f8b8b4b;
+	--primary-light: #ededed;
+	--secondary-light: #fefefe;
+}
+
+body {
+    height: 100%;
+    min-height: 100vh;
+    background-color: #2c2a2a;
+    font-family: 'Roboto', sans-serif;
+}
+
+.grid {
+    height: 37px;
+    width: 37px;
+    border: 1px solid var(--primary-lightdark);
+}
+
+.backgroundColor {
+    background-color: red;
+}
+
+.divColor {
+    background-color: aqua;
+}
+
+
+.title {
+    color: whitesmoke;
+    font-size: 50px;
+    font-weight: bold;
+}
+header {
+    margin-bottom: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-dark);
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+    height: 800px;
+}
+
+
+.menu{
+    border: 1px solid white;
+    width: 350px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #0a0505;
+    gap: 17px;
+}
+
+.buttons-control {
+    width: 330px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #0a0505;
+    gap: 17px;
+}
+
+
+.grid-container {
+    border: 2px solid white;
+    height: 650px;
+    width: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu, .grid-container {
+    border-radius: 5px;
+}
+
+input[type='color'] {
+    width: 80px;
+    height: 40px;
+    border: none;
+}
+
+.buttons {
+    display: flex;
+}
+
+.menu-color, .menu-background{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    gap: 20px;
+    width: 100%;
+}
+
+.menu-color {
+    margin-top: 5px;
+}
+.menu-background {
+    margin-top: -5px;
+}
+
+h3 {
+    color: white;
+}
+p {
+    color: white;
+}
+
+button {
+    width: 320px;
+    height: 45px;
+    border-radius: 30px;
+    border-color: rgb(62, 166, 255);
+    color: rgb(62, 166, 255);
+    border-width: 3px;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.sketch-pad {
+    width: 602px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+}

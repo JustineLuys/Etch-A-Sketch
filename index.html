@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+</head>
+<body>
+    <header class="title">
+        Etch-A-Sketch🖌️
+    </header>
+    <main class="content">
+        <div class="menu">
+            <div class="menu-color">
+                <input type="color" name="color" id="color"> <h3>Pen Color</h3>
+                
+            </div>
+            <div class="buttons-control">
+                <button class="colorfill">Color Fill</button>
+                <button class="rainbow">Rainbow</button>
+                <button class="lighten">Lighten</button>
+                <button class="eraser">Eraser</button>
+                <input type="range" name="div-slider" id="div-slider" value="24" min="1" max="64">
+                <p class="grid-size">Grid size: <span id="range-value">24</span> x <span id="range-value">24</span></p>
+                <button class="toggle">Toggle Grid</button>
+                <button class="clear">Clear Board</button>
+            </div>
+            
+        </div>
+        <div class="grid-container">
+            <div class="sketch-pad">
+                
+            </div>
+        </div>
+    </main>
+</body>
+</html>
