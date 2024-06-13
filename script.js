@@ -4,17 +4,21 @@ let gridValues = document.querySelectorAll('#range-value');
 let pad = document.querySelector('.sketch-pad');
 let style = window.getComputedStyle(pad);
 let penColor = document.querySelector('#color');
+let buttons = document.querySelector('.buttons-control');
 
 // Variables
 let gridTiles;
 let colorValue = 'black';
-let isMouseMOve = false;
-let isMouseDown = false;
+let penColorValue = 'black';
+let isMouseDown = toggleButton = rainbowButton = toggleGridButton  = isRainbowOn = false;
 
+/* Functions */
+function randomize() {
+    return Math.floor(Math.random() * 256);
+}
 
 function printCurrentGrid(num){
     const result = pad.clientWidth / num;
-    // Remove all existing grid tiles
     pad.innerHTML = ''; // clear the pad
     for (let i = 0; i < num * num; i++){
         let div = document.createElement('div');
@@ -27,11 +31,71 @@ function printCurrentGrid(num){
     printColors(colorValue);
 }
 
-document.addEventListener('DOMContentLoaded', printCurrentGrid(parseInt(gridValues[0].textContent)));
-slider.addEventListener('mousedown',function(e){
-    isMouseDown = true;
-});
+function printColors(currentColor, isRainbowOn) {
+    gridTiles.forEach(tile => {
+        tile.onmousedown = tile.onmouseup = tile.onmouseover = (e) => {
+            e.preventDefault();
+            if (e.type === 'mousedown') {
+                isMouseDown = true;
+            } else if (e.type === 'mouseup') {
+                isMouseDown = false;
+            }
+            if (isMouseDown || e.type === 'mousedown') {
+                tile.style.backgroundColor = isRainbowOn ? `rgb(${randomize()}, ${randomize()}, ${randomize()})` : currentColor;
+            }
+        }
+    });
+}
 
+function rainbowColors(e) {
+    rainbowButton = !rainbowButton;
+    if (rainbowButton) {
+        printColors(colorValue, isRainbowOn = true);
+    } else {
+        printColors(colorValue, isRainbowOn = false);
+    }
+}
+
+function clearTilesColor(e) {
+    gridTiles.forEach(tile => tile.style.backgroundColor = 'white');
+}
+
+function toggleGridLines(e) {
+    toggleGridButton = !toggleGridButton;
+    gridTiles.forEach(tile => toggleGridButton ? tile.style.border = '': 
+        tile.style.border = '1px solid black');
+}
+
+function handleButtonEvent(e) {
+    if (e.target.nodeName === 'BUTTON') {
+        const buttonClass = e.target.className;
+        switch(buttonClass) {
+            case 'colorfill':
+                printColors(penColor.value, isRainbowOn = false);
+                break;
+            case 'rainbow':
+                isRainbowOn = !isRainbowOn;
+                printColors(colorValue, isRainbowOn);
+                break;
+            case 'lighten':
+                lightenColors(e);
+                break;
+            case 'eraser':
+                printColors('white', isRainbowOn = false);
+                break;
+            case 'toggle':
+                toggleGridLines(e);
+                break;
+            case 'clear':
+                clearTilesColor(e);
+                break;
+        }
+    }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', printCurrentGrid(parseInt(gridValues[0].textContent)));
+slider.addEventListener('mousedown', (e) => isMouseDown = true);
 // while moving the slider, it prints the current grid size
 slider.addEventListener('mousemove', function(e){
     let gridCount = e.target.value;
@@ -41,7 +105,6 @@ slider.addEventListener('mousemove', function(e){
         });        
     }
 })
-
 // get the value after mouse up
 slider.addEventListener('mouseup', function(e){
     let gridCount = e.target.value;
@@ -53,88 +116,12 @@ slider.addEventListener('mouseup', function(e){
     printCurrentGrid(parseInt(gridCount));
     printColors(colorValue);
 })
-
 // whole color value;
 penColor.addEventListener('mouseout', function(e) {
-    colorValue = e.target.value;
+    penColorValue = e.target.value;
+    colorValue = penColorValue;
     printColors(colorValue);
 });
-
-function printColors(currentColor) {
-    gridTiles.forEach(function(tile) {
-        tile.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            isMouseDown = true;
-            e.target.style.backgroundColor = currentColor;
-        });
-        tile.addEventListener('mouseup', function(e) {
-            e.preventDefault();
-            isMouseDown = false;
-            e.target.style.backgroundColor = currentColor;
-        });
-        tile.addEventListener('mouseover', function(e) {
-            e.preventDefault();
-            if (isMouseDown) {
-            e.target.style.backgroundColor = currentColor;
-            }
-        })
-    });
-    
-}
+buttons.addEventListener('click', handleButtonEvent);
 
 
-function randomize() {
-    return Math.floor(Math.random() * 256);
-}
-
-
-let buttons = document.querySelector('.buttons-control');
-
-buttons.addEventListener('click', function(e){
-    if (e.target.nodeName === 'BUTTON') {
-        let buttonClass = e.target.className;
-    switch(buttonClass) {
-        case 'colorfill':
-            console.log(pad.children.className);
-            break;
-        case 'rainbow':
-            printRainbowColors(e);
-            break;
-        case 'lighten':
-            lightenColors(e);
-            break;
-        case 'eraser':
-            colorValue = 'white';
-            printColors(colorValue);
-            break;
-        case 'toggle':
-            console.log('hello');
-            break;
-        case 'clear':
-            console.log('hello');
-            break;
-        }
-    }
-});
-
-
-function printRainbowColors(e) {
-    gridTiles.forEach(function(tile) {
-        tile.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            isMouseDown = true;
-            e.target.style.backgroundColor = `rgb(${randomize()}, ${randomize()}, ${randomize()})`;
-        });
-        tile.addEventListener('mouseup', function(e) {
-            e.preventDefault();
-            isMouseDown = false;
-            e.target.style.backgroundColor = `rgb(${randomize()}, ${randomize()}, ${randomize()})`;
-        });
-        tile.addEventListener('mousemove', function(e) {
-            e.preventDefault();
-            if (isMouseDown) {
-                e.target.style.backgroundColor = `rgb(${randomize()}, ${randomize()}, ${randomize()})`;
-            }
-        })
-    });
-}
