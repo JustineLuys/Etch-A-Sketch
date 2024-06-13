@@ -77,9 +77,6 @@ function handleButtonEvent(e) {
                 isRainbowOn = !isRainbowOn;
                 printColors(colorValue, isRainbowOn);
                 break;
-            case 'lighten':
-                lightenColors(e);
-                break;
             case 'eraser':
                 printColors('white', isRainbowOn = false);
                 break;
